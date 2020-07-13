@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EtudiantController!{% endblock %}
+
+{% block body  %}
+    <div class="container-fluid w-100 bg-dark text-white p-3 mt-5 shadow rounded ">
+        <div class="row justify-content-center"><h3>Enregistrement Etudiant <i class="fa fa-user" aria-hidden="true"></i></h3></div>
+        {{form_start(forms,{attr: {'novalidate': 'novalidate'}})}}
+        <div class="row">
+            <div class="col-md-6">{{ form_row(forms.prenom) }}</div>
+            <div class="col-md-6">{{ form_row(forms.nom) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 ">{{ form_row(forms.matricule) }}</div>
+            <div class="col-md-6">{{ form_row(forms.dateNaiss) }}</div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(forms.tel) }}</div>
+            <div class="col-md-6">{{ form_row(forms.email) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(forms.type) }}</div>
+            <div class="col-md-6">{{ form_row(forms.departement) }}</div>
+        </div>
+        <div class="row">
+        <div class="col-md-12">{{ form_row(forms.chambre) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">{{ form_row(forms.adresse) }}</div>
+        </div>
+        <input type="hidden" id="matricule"  value="{{ nbrField }}">
+
+        <button type="submit" class="btn btn-outline-white">Enregistrer</button>
+
+    </div>
+
+
+        {{form_end(forms)}}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function (){
+           $divAdreese= $('#etudiant_adresse').parent('div').attr('id','adresse');
+           $divAdreese.hide()
+            $divChambre=  $('#etudiant_chambre').parent('div').attr('id','chambre');
+            $divChambre.hide()
+
+            //
+
+            $('#etudiant_type').change(function (){
+
+                if( $('#etudiant_type').val()==="Non Boursier" || $('#etudiant_type').val()=== "Boursier Non Loge"){
+                    $divAdreese.show();
+                    $divChambre.hide()
+                }else{
+                    $divChambre.show()
+                    $divAdreese.hide();
+                }
+            })
+
+            //
+        var matricule= $('#etudiant_matricule');
+
+        $('#etudiant_dateNaiss_year').change(function (){
+            var prenom=  $('#etudiant_prenom').val();
+            var nom=  $('#etudiant_nom').val();
+            var year=  $('#etudiant_dateNaiss_year').val();
+            matricule.attr(`value`,`${year.substr(2)}${prenom.substr(0,2).toUpperCase()}${nom.substr((nom.length)-2).toUpperCase()}${$('#matricule').val().toString().padStart(4,'0')}`)
+        })
+
+
+        })
+
+    </script>
+{% endblock %}

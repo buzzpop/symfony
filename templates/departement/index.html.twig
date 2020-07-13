@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+
+ {% endblock %}
+{% block title %}Hello DepartementController!{% endblock %}
+
+{% block body %}
+    <div class="container w-100 bg-dark p-3 mt-5 text-white rounded">
+        <div class="row justify-content-center"><h3>Enregistrement d'un Departement <i class="fa fa-bed" aria-hidden="true"></i></h3></div>
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        <button type="submit" class="btn btn-outline-dark">Enregistrer</button>
+
+        {{form_end(form)}}
+    </div>
+{% endblock %}

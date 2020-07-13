@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello ChambreController!{% endblock %}
+
+{% block body %}
+    <div class="container w-100 bg-dark p-3 text-white rounded mt-5">
+        <div class="row justify-content-center"><h3>Enregistrement Chambre <i class="fa fa-bed" aria-hidden="true"></i></h3></div>
+        {{form_start(forms,{attr: {'novalidate': 'novalidate'}})}}
+        <input type="hidden" id="nbrField"  value="{% if nbrField is defined %}{{ nbrField }}{% endif %}">
+        {{form_widget(forms)}}
+        <button type="submit" class="btn btn-outline-white">Enregistrer</button>
+
+        {{form_end(forms)}}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+    $('#chambre_batiment').change(function (){
+        numBatiment=$('#chambre_batiment').val();
+        if ($('#chambre_numChambre').val().includes('-')===false){
+            nbrField= $('#nbrField').val().toString().padStart(4,'0');
+            c=numBatiment.toString().padStart(3,'0');
+            $('#chambre_numChambre').attr('value',`${c}-${nbrField}`)
+        }else {
+
+            c=numBatiment.toString().padStart(3,'0');
+            numchambre= $('#chambre_numChambre').val().substr(4);
+            $('#chambre_numChambre').attr('value',`${c}-${numchambre}`)
+
+        }
+    })
+
+})
+
+    </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello ChambreController!{% endblock %}
+
+{% block body %}
+    <div class="container-fluid w-100 bg-dark text-white p-3">
+        <h1>Liste des Chambres <i class="fa fa-bed" aria-hidden="true"></i></h1>
+        <p><a href="{{ path('create-chambre') }}">Ajouter une Chambre <i class="fa fa-bed" aria-hidden="true"></i></a></p>
+
+        <table class="table table-striped table-bordered text-center">
+            <thead>
+            <tr>
+                <th scope="col">N° Chambre</th>
+                <th scope="col">Type de Chambre</th>
+                <th scope="col">Batiment</th>
+                <th scope="col">Date de Création</th>
+                <th scope="col" colspan="2">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for room in rooms %}
+            <tr>
+
+                <td>{{ room.numChambre }}</td>
+                <td>{{ room.type }}</td>
+                <td>{{ room.batiment }}</td>
+                <td>{{ room.date|date('d/m/y') }}</td>
+                <td><a class="btn btn-primary" href="{{ path('update-room',{'id':room.id}) }}">Edit</a></td>
+                <td><a class="btn btn-danger " href="{{ path('delete_room',{'id':room.id}) }}">Delete</a></td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="row justify-content-center">
+            {{ knp_pagination_render(rooms) }}
+        </div>
+
+    </div>
+{% endblock %}

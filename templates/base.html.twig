@@ -3,10 +3,50 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+        {% endblock %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     </head>
     <body>
+    <div id="main">
+     <nav  class="navbar navbar-expand-sm navbar-dark  w-100 bg-secondary">
+
+            <!-- Links -->
+            <ul class="navbar-nav w-100 justify-content-between ml-4 mr-4">
+                <li class="nav-item ">
+                    <a class="nav-link {% if current_name is defined and current_name=='etudiant'%} active {%endif%}" href="{{path('create-etudiant')}}">Register Student <i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current_name is defined and current_name=='etudiantlister'%}active  {%endif%}" href="{{path('list-etudiants')}}">List Students <i class="fa fa-users" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link {% if current_name is defined and current_name=='chambrelister'%} active {%endif%}" href="{{path('list-chambres')}}">List Rooms <i class="fa fa-bed" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current_name is defined and current_name=='batiment'%} active {%endif%}"
+                    href="{{path('create-batiment')}}">Register Building <i class="fa fa-building-o" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if current_name is defined and current_name=='chambre'%} active {%endif%}" href="{{path('create-chambre')}}">Register Room <i class="fa fa-bed" aria-hidden="true"></i></a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link {% if current_name is defined and current_name=='departement'%} active {%endif%}" href="{{path('create-departement')}}">Register Department <i class="fa fa-building-o" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+            <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+            <script src="//code.jquery.com/jquery.js"></script>
+        {% endblock %}
+     {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
     </body>
 </html>
