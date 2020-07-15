@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Etudiant;
+use App\Entity\SearchEtudiant;
+use App\Form\ChambreSearchType;
+use App\Form\EtudiantSearchType;
 use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class EtudiantController extends AbstractController
@@ -47,10 +51,19 @@ class EtudiantController extends AbstractController
 
     /**
      * @Route("/etudiant.lister", name="list-etudiants")
+     * @param EtudiantRepository $em
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
      */
     public function lister(EtudiantRepository $em, Request $request, PaginatorInterface $paginator)
     {
-       $etudiants= $em->findAll();
+        $searchData = new SearchEtudiant();
+       $formSerah= $this->createForm(EtudiantSearchType::class, $searchData);
+
+        $formSerah->handleRequest($request);
+
+       $etudiants= $em->findByEtudiant($searchData);
         $paination= $paginator->paginate(
            $etudiants,// les donnees à paginer
            $request->query->getInt('page',1), // Numero de page en cours, 1 pardefaut
@@ -60,6 +73,7 @@ class EtudiantController extends AbstractController
         return $this->render('etudiant/list.html.twig', [
             'current_name' => 'etudiantlister',
             'etudiants'=>$paination,
+            'etudiantSearch'=>$formSerah->createView()
         ]);
     }
 
@@ -96,4 +110,5 @@ class EtudiantController extends AbstractController
         return $this->redirectToRoute('list-etudiants');
 
     }
+
 }

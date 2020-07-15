@@ -1,9 +1,39 @@
 {% extends 'base.html.twig' %}
 {% block title %}Hello ChambreController!{% endblock %}
 
+ {% block stylesheets %}
+     <link href="{{ asset('css/css.css') }}" rel="stylesheet"/>
+ {% endblock %}
+
 {% block body %}
     <div class="container-fluid  bg-dark text-white p-3">
-        <h1>Liste des Etudiants <i class="fa fa-graduation-cap" aria-hidden="true"></i></h1>
+       <div class="row">
+           <div class="col-4">
+               <h1>Liste des Etudiants <i class="fa fa-graduation-cap" aria-hidden="true"></i></h1>
+           </div>
+
+           <div class="col-1">
+              <p id="filter_text" class=" badge badge-primary text-wrap ">Filtrer par:</p>
+           </div>
+           <div class="col-2">
+               {{ form_start(etudiantSearch,{attr: {'novalidate': 'novalidate'}})}}
+               {{ form_row(etudiantSearch.matricule) }}
+           </div>
+           <div class="col-2">
+               {{ form_row(etudiantSearch.type) }}
+           </div>
+           <div class="col-2">
+               {{ form_row(etudiantSearch.departement) }}
+
+           </div>
+
+           <div class="col-1">
+                <button id="serach_bnt" type="submit" class="btn btn-outline-primary">Search</button>
+                {{ form_end (etudiantSearch)}}
+            </div>
+
+
+       </div>
         <p><a href="{{ path('create-etudiant') }}">Ajouter un Etudiant <i class="fa fa-user-plus" aria-hidden="true"></i></a></p>
         <table class="table table-striped table-bordered text-center">
             <thead>

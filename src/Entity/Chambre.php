@@ -42,10 +42,7 @@ class Chambre
     private $type;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Batiment::class, inversedBy="chambres")
-     */
-    private $batiment;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -57,10 +54,15 @@ class Chambre
      */
     private $etudiants;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Batiment::class, inversedBy="chambres")
+     */
+
+    private $batiment;
+
 
     public function __construct(){
         $this->date= new \Datetime();
-        $this->etudiants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,17 +96,7 @@ class Chambre
 
 
 
-    public function getBatiment(): ?batiment
-    {
-        return $this->batiment;
-    }
 
-    public function setBatiment(?batiment $batiment): self
-    {
-        $this->batiment = $batiment;
-
-        return $this;
-    }
 
     public function getDate(): ?\DateTimeInterface
     {
@@ -118,36 +110,19 @@ class Chambre
         return $this;
     }
 
-    /**
-     * @return Collection|Etudiant[]
-     */
-    public function getEtudiants(): Collection
+    public function getBatiment(): ?Batiment
     {
-        return $this->etudiants;
+        return $this->batiment;
     }
 
-    public function addEtudiant(Etudiant $etudiant): self
+    public function setBatiment(?Batiment $batiment): self
     {
-        if (!$this->etudiants->contains($etudiant)) {
-            $this->etudiants[] = $etudiant;
-            $etudiant->setChambre($this);
-        }
+        $this->batiment = $batiment;
 
         return $this;
     }
 
-    public function removeEtudiant(Etudiant $etudiant): self
-    {
-        if ($this->etudiants->contains($etudiant)) {
-            $this->etudiants->removeElement($etudiant);
-            // set the owning side to null (unless already changed)
-            if ($etudiant->getChambre() === $this) {
-                $etudiant->setChambre(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
 
 }

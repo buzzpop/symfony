@@ -28,7 +28,7 @@ class ChambreType extends AbstractType
             ])
             ->add('batiment', EntityType::class,[
                 'class'=> 'App\Entity\Batiment',
-                'choice_label' => 'id',
+                'choice_label' => 'numBatiment',
 
             ])
 

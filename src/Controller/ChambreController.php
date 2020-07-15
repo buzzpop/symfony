@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 use App\Entity\Chambre;
+
+use App\Entity\Etudinat;
+use App\Entity\SearchChambre;
+use App\Form\ChambreSearchType;
 use App\Form\ChambreType;
 use App\Repository\ChambreRepository;
-use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Knp\Component\Pager\PaginatorInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,7 +58,11 @@ class ChambreController extends AbstractController
      */
     public function lister(ChambreRepository $em, Request $request, PaginatorInterface $paginator)
     {
-        $rooms= $em->findAll();
+        $searchData = new SearchChambre();
+        $formSerah= $this->createForm(ChambreSearchType::class, $searchData);
+         $formSerah->handleRequest($request);
+
+        $rooms= $em->findByChambre($searchData);
         $paination= $paginator->paginate(
             $rooms,// les donnees à paginer
             $request->query->getInt('page',1), // Numero de page en cours, 1 pardefaut
@@ -66,6 +72,7 @@ class ChambreController extends AbstractController
         return $this->render('chambre/list.html.twig', [
             'current_name' => 'chambrelister',
             'rooms'=>$paination,
+            'chambreSearch'=>$formSerah->createView()
         ]);
     }
 

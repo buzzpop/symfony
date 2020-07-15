@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Chambre;
+use App\Entity\SearchChambre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,6 +24,30 @@ class ChambreRepository extends ServiceEntityRepository
     // /**
     //  * @return Chambre[] Returns an array of Chambre objects
     //  */
+
+    public function findByChambre( SearchChambre $search): Query
+    {
+        $query= $this->createQueryBuilder('c');
+
+        if ($search->getNumchambre()){
+            $query
+                ->andWhere('c.numChambre = :numChambre')
+                ->setParameter('numChambre', $search->getNumchambre());
+        }
+        if ($search->getType()){
+            $query
+                ->andWhere('c.type = :type')
+                ->setParameter('type', $search->getType());
+        }
+        if ($search->getBatiment()){
+            $query
+                ->andWhere('c.batiment = :batiment')
+                ->setParameter('batiment', $search->getBatiment());
+        }
+        return $query->getQuery();
+
+    }
+
     /*
     public function findByExampleField($value)
     {
